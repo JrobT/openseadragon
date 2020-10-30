@@ -20,10 +20,9 @@ module.exports = function(grunt) {
 
     // ----------
     var packageJson = grunt.file.readJSON("package.json"),
-        distribution = "build/openseadragon/openseadragon.js",
-        minified = "build/openseadragon/openseadragon.min.js",
-        packageDirName = "openseadragon-bin-" + packageJson.version,
-        packageDir = "build/" + packageDirName + "/",
+        distribution = "build/openseadragon.js",
+        minified = "build/openseadragon.min.js",
+        packageDir = "build/",
         releaseRoot = "../site-build/built-openseadragon/",
         coverageDir = 'coverage/' + dateFormat(new Date(), 'yyyymmdd-HHMMss'),
         sources = [
@@ -109,11 +108,11 @@ module.exports = function(grunt) {
         },
         replace: {
             cleanPaths: {
-                src: ['build/openseadragon/*.map'],
+                src: ['build/*.map'],
                 overwrite: true,
                 replacements: [
                     {
-                        from: /build\/openseadragon\//g,
+                        from: /build/g,
                         to: ''
                     }
                 ]
@@ -129,8 +128,8 @@ module.exports = function(grunt) {
                     join_vars: false
                 },
                 sourceMap: true,
-                sourceMapName: 'build/openseadragon/openseadragon.min.js.map',
-                sourceMapIn: 'build/openseadragon/openseadragon.js.map'
+                sourceMapName: 'build/openseadragon.min.js.map',
+                sourceMapIn: 'build/openseadragon.js.map'
             },
             openseadragon: {
                 src: distribution,
@@ -140,20 +139,20 @@ module.exports = function(grunt) {
         compress: {
             zip: {
                 options: {
-                    archive: "build/releases/" + packageDirName + ".zip",
+                    archive: "build/release.zip",
                     level: 9
                 },
                 files: [
-                   { expand: true, cwd: "build/", src: [ packageDirName + "/**" ] }
+                   { expand: true, cwd: "build/", src: [  "/**" ] }
                 ]
             },
             tar: {
                 options: {
-                    archive: "build/releases/" + packageDirName + ".tar.gz",
+                    archive: "build/releases.tar.gz",
                     level: 9
                 },
                 files: [
-                   { expand: true, cwd: "build/", src: [ packageDirName + "/**" ] }
+                   { expand: true, cwd: "build/", src: [ "/**" ] }
                 ]
             }
         },
@@ -243,18 +242,43 @@ module.exports = function(grunt) {
 
     // ----------
     // Copy:build task.
-    // Copies the image files into the appropriate location in the build folder.
     grunt.registerTask("copy:build", function() {
         grunt.file.recurse("images", function(abspath, rootdir, subdir, filename) {
-            grunt.file.copy(abspath, "build/openseadragon/images/" + (subdir || "") + filename);
+            // Copies the image files into the appropriate location in the build folder.
+            grunt.file.copy(abspath, "build/images/" + (subdir || "") + filename);
         });
+
+        // Copies the flat toolbar icons files into the appropriate location in the build folder.
+        try {
+            grunt.file.recurse("plugins/openseadragon-flat-toolbar-icons/images", function(abspath, rootdir, subdir, filename) {
+                grunt.file.copy(abspath, "build/flatimages/" + (subdir || "") + filename);
+            });
+        } catch (e) {
+            console.log('There was an issue building the flat toolbar icons');
+        }
+
+        // Copies the png icons files into the appropriate location in the build folder.
+        try {
+            grunt.file.recurse("icons", function(abspath, rootdir, subdir, filename) {
+                grunt.file.copy(abspath, "build/icons/" + (subdir || "") + filename);
+            });
+        } catch (e) {
+            console.log('There was an issue building the png icons');
+        }
+
+        // Copies plugins into the appropriate location in the build folder.
+        grunt.file.copy("plugins/bookmark-url/openseadragon-bookmark-url.js", "build/plugins/" + "bookmark-url.js");
+        grunt.file.copy("plugins/OpenSeadragonHTMLelements/OpenSeadragonHTMLelements.js", "build/plugins/" + "HTMLelements.js");
+        grunt.file.copy("plugins/OpenSeadragonScalebar/openseadragon-scalebar.js", "build/plugins/" + "scalebar.js");
+        grunt.file.copy("plugins/OpenSeadragonDraggableNavigator/openseadragon-draggable-navigator.js", "build/plugins/" + "navigator.js");
+        grunt.file.copy("plugins/OpenSeadragonMagnifier/dist/openseadragonmagnifier.js", "build/plugins/" + "magnifier.js");
     });
 
     // ----------
     // Copy:package task.
     // Creates a directory tree to be compressed into a package.
     grunt.registerTask("copy:package", function() {
-        grunt.file.recurse("build/openseadragon", function(abspath, rootdir, subdir, filename) {
+        grunt.file.recurse("build", function(abspath, rootdir, subdir, filename) {
             var dest = packageDir +
                 (subdir ? subdir + "/" : '/') +
                 filename;
