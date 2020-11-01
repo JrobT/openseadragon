@@ -1,6 +1,3 @@
-[submodule "plugins/OpenSeadragonMagnifier"]
-	path = plugins/OpenSeadragonMagnifier
-	url = https://github.com/picturae/OpenSeadragonMagnifier.git
 [submodule "plugins/OpenSeadragonScalebar"]
 	path = plugins/OpenSeadragonScalebar
 	url = https://github.com/usnistgov/OpenSeadragonScalebar.git
@@ -13,6 +10,6 @@
 [submodule "plugins/OpenSeadragonDraggableNavigator"]
 	path = plugins/OpenSeadragonDraggableNavigator
 	url = https://github.com/harshalitalele/OpenSeadragonDraggableNavigator.git
-[submodule "plugins/openseadragon-flat-toolbar-icons"]
-	path = plugins/openseadragon-flat-toolbar-icons
-	url = https://github.com/peterthomet/openseadragon-flat-toolbar-icons.git
+[submodule "plugins/OpenSeadragonMagnifier"]
+	path = plugins/OpenSeadragonMagnifier
+	url = https://github.com/JrobT/OpenSeadragonMagnifier.git
