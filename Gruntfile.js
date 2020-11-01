@@ -248,15 +248,6 @@ module.exports = function(grunt) {
             grunt.file.copy(abspath, "build/images/" + (subdir || "") + filename);
         });
 
-        // Copies the flat toolbar icons files into the appropriate location in the build folder.
-        try {
-            grunt.file.recurse("plugins/openseadragon-flat-toolbar-icons/images", function(abspath, rootdir, subdir, filename) {
-                grunt.file.copy(abspath, "build/flatimages/" + (subdir || "") + filename);
-            });
-        } catch (e) {
-            console.log('There was an issue building the flat toolbar icons');
-        }
-
         // Copies the png icons files into the appropriate location in the build folder.
         try {
             grunt.file.recurse("icons", function(abspath, rootdir, subdir, filename) {
