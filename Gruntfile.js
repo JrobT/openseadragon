@@ -243,19 +243,15 @@ module.exports = function(grunt) {
     // ----------
     // Copy:build task.
     grunt.registerTask("copy:build", function() {
+        // Copies the image files into the appropriate location in the build folder.
         grunt.file.recurse("images", function(abspath, rootdir, subdir, filename) {
-            // Copies the image files into the appropriate location in the build folder.
             grunt.file.copy(abspath, "build/images/" + (subdir || "") + filename);
         });
 
         // Copies the png icons files into the appropriate location in the build folder.
-        try {
-            grunt.file.recurse("icons", function(abspath, rootdir, subdir, filename) {
-                grunt.file.copy(abspath, "build/icons/" + (subdir || "") + filename);
-            });
-        } catch (e) {
-            console.log('There was an issue building the png icons');
-        }
+        grunt.file.recurse("icons", function(abspath, rootdir, subdir, filename) {
+            grunt.file.copy(abspath, "build/icons/" + (subdir || "") + filename);
+        });
 
         // Copies plugins into the appropriate location in the build folder.
         grunt.file.copy("plugins/bookmark-url/openseadragon-bookmark-url.js", "build/plugins/" + "bookmark-url.js");
@@ -263,6 +259,7 @@ module.exports = function(grunt) {
         grunt.file.copy("plugins/OpenSeadragonScalebar/openseadragon-scalebar.js", "build/plugins/" + "scalebar.js");
         grunt.file.copy("plugins/OpenSeadragonDraggableNavigator/openseadragon-draggable-navigator.js", "build/plugins/" + "navigator.js");
         grunt.file.copy("plugins/OpenSeadragonMagnifier/dist/openseadragonmagnifier.js", "build/plugins/" + "magnifier.js");
+        grunt.file.copy("plugins/openseadragonselection/dist/openseadragonselection.js", "build/plugins/" + "selection.js");
     });
 
     // ----------
