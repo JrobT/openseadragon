@@ -257,7 +257,7 @@ module.exports = function(grunt) {
         grunt.file.copy("plugins/scalebar.js", "build/plugins/scalebar.js");
         grunt.file.copy("plugins/draggable-navigator.js", "build/plugins/draggable-navigator.js");
         grunt.file.copy("plugins/magnifier.js", "build/plugins/magnifier.js");
-        grunt.file.copy("plugins/selection/dist/selection.js", "build/plugins/selection.js");
+        grunt.file.copy("plugins/selection.js", "build/plugins/selection.js");
     });
 
     // ----------
