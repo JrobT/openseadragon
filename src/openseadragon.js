@@ -494,6 +494,18 @@
   *     Note: {@link OpenSeadragon.Options.showNavigationControl} is overriding
   *     this setting when set to false.
   *
+  * @property {Boolean} [showNavControl=true]
+  *     If true then the 'Toggle navigator' button is displayed to switch
+  *     the tool on or off.<br>
+  *     Note: {@link OpenSeadragon.Options.showNavigationControl} is overriding
+  *     this setting when set to false.
+  *
+  * @property {Boolean} [showMagnifierControl=true]
+  *     If true then the 'Toggle magnifier' button is displayed to switch
+  *     the tool on or off.<br>
+  *     Note: {@link OpenSeadragon.Options.showMagnifierControl} is overriding
+  *     this setting when set to false.
+  *
   * @property {Boolean} [showRotationControl=false]
   *     If true then the rotate left/right controls will be displayed as part of the
   *     standard controls. This is also subject to the browser support for rotate
@@ -531,6 +543,18 @@
   *
   * @property {String} homeButton
   *     Set the id of the custom 'Go home' button to use.
+  *     This is useful to have a custom button anywhere in the web page.<br>
+  *     To only change the button images, consider using
+  *     {@link OpenSeadragon.Options.navImages}
+  *
+  * @property {String} navButton
+  *     Set the id of the custom 'Navigation' button to use.
+  *     This is useful to have a custom button anywhere in the web page.<br>
+  *     To only change the button images, consider using
+  *     {@link OpenSeadragon.Options.navImages}
+  *
+  * @property {String} magnifierButton
+  *     Set the id of the custom 'Magnifier' button to use.
   *     This is useful to have a custom button anywhere in the web page.<br>
   *     To only change the button images, consider using
   *     {@link OpenSeadragon.Options.navImages}
@@ -696,6 +720,18 @@
   * @property {String} home.GROUP
   * @property {String} home.HOVER
   * @property {String} home.DOWN
+  *
+  * @property {Object} nav - Images for the nav button.
+  * @property {String} nav.REST
+  * @property {String} nav.GROUP
+  * @property {String} nav.HOVER
+  * @property {String} nav.DOWN
+  *
+  * @property {Object} magnifier - Images for the nav button.
+  * @property {String} magnifier.REST
+  * @property {String} magnifier.GROUP
+  * @property {String} magnifier.HOVER
+  * @property {String} magnifier.DOWN
   *
   * @property {Object} fullpage - Images for the full-page button.
   * @property {String} fullpage.REST
@@ -1153,8 +1189,10 @@ function OpenSeadragon( options ){
             showZoomControl:         true,  //ZOOM
             showHomeControl:         true,  //HOME
             showFullPageControl:     true,  //FULL
+            showNavControl:          true,  //NAVIGATION
+            showMagnifierControl:    true,  //MAGNIFIER
             showRotationControl:     false, //ROTATION
-            showFlipControl:         false,  //FLIP
+            showFlipControl:         false, //FLIP
             controlsFadeDelay:       2000,  //ZOOM/HOME/FULL/SEQUENCE
             controlsFadeLength:      1500,  //ZOOM/HOME/FULL/SEQUENCE
             mouseNavEnabled:         true,  //GENERAL MOUSE INTERACTIVITY
@@ -1233,6 +1271,18 @@ function OpenSeadragon( options ){
                     GROUP:  'home_grouphover.png',
                     HOVER:  'home_hover.png',
                     DOWN:   'home_pressed.png'
+                },
+                nav: {
+                    REST:   'nav_rest.png',
+                    GROUP:  'nav_grouphover.png',
+                    HOVER:  'nav_hover.png',
+                    DOWN:   'nav_pressed.png'
+                },
+                magnifier: {
+                    REST:   'magnifier_rest.png',
+                    GROUP:  'magnifier_grouphover.png',
+                    HOVER:  'magnifier_hover.png',
+                    DOWN:   'magnifier_pressed.png'
                 },
                 fullpage: {
                     REST:   'fullpage_rest.png',

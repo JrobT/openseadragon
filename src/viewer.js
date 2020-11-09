@@ -211,6 +211,8 @@ $.Viewer = function( options ) {
         // how much we should be continuously zooming by
         zoomFactor:        null,
         lastZoomTime:      null,
+        nav:               this.showNavigator,
+        magnifier:         this.showMagnifier,
         fullPage:          false,
         onfullscreenchange: null
     };
@@ -901,6 +903,24 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
 
         this.debugMode = debugMode;
         this.forceRedraw();
+    },
+
+    /**
+     * @function
+     * @return {Boolean}
+     */
+    isNav: function () {
+        return THIS[ this.hash ].nav;
+    },
+
+    /**
+     * Toggle navigator.
+     * @function
+     * @param {Boolean} nav
+     *      If true, enable navigator.  If false, disable navigator.
+     */
+    setNav: function( nav ) {
+        THIS[ this.hash ].nav = nav;
     },
 
     /**
@@ -1710,6 +1730,7 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
             beginZoomingOutHandler  = $.delegate( this, beginZoomingOut ),
             doSingleZoomOutHandler  = $.delegate( this, doSingleZoomOut ),
             onHomeHandler           = $.delegate( this, onHome ),
+            onNavHandler            = $.delegate( this, onNav ),
             onFullScreenHandler     = $.delegate( this, onFullScreen ),
             onRotateLeftHandler     = $.delegate( this, onRotateLeft ),
             onRotateRightHandler    = $.delegate( this, onRotateRight ),
@@ -1724,8 +1745,8 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
         if ( this.showNavigationControl ) {
 
             if( this.zoomInButton || this.zoomOutButton ||
-                this.homeButton || this.fullPageButton ||
-                this.rotateLeftButton || this.rotateRightButton ||
+                this.homeButton || this.fullPageButton || this.navButton ||
+                this.magnifierButton || this.rotateLeftButton || this.rotateRightButton ||
                 this.flipButton ) {
                 //if we are binding to custom buttons then layout and
                 //grouping is the responsibility of the page author
@@ -1781,6 +1802,22 @@ $.extend( $.Viewer.prototype, $.EventSource.prototype, $.ControlDock.prototype, 
                     srcHover:   resolveUrl( this.prefixUrl, navImages.home.HOVER ),
                     srcDown:    resolveUrl( this.prefixUrl, navImages.home.DOWN ),
                     onRelease:  onHomeHandler,
+                    onFocus:    onFocusHandler,
+                    onBlur:     onBlurHandler
+                }));
+            }
+
+            if ( this.showNavControl ) {
+                buttons.push( this.navButton = new $.Button({
+                    element:    this.navButton ? $.getElement( this.navButton ) : null,
+                    clickTimeThreshold: this.clickTimeThreshold,
+                    clickDistThreshold: this.clickDistThreshold,
+                    tooltip:    $.getString( "Tooltips.Nav" ),
+                    srcRest:    resolveUrl( this.prefixUrl, navImages.nav.REST ),
+                    srcGroup:   resolveUrl( this.prefixUrl, navImages.nav.GROUP ),
+                    srcHover:   resolveUrl( this.prefixUrl, navImages.nav.HOVER ),
+                    srcDown:    resolveUrl( this.prefixUrl, navImages.nav.DOWN ),
+                    onRelease:  onNavHandler,
                     onFocus:    onFocusHandler,
                     onBlur:     onBlurHandler
                 }));
@@ -3493,6 +3530,17 @@ function onHome() {
     }
 }
 
+
+function onNav() {
+    var draggableNavCss = "width: 25px; height: 25px; z-index: 99999; position: absolute; left: -18px; bottom: -14px;";
+    this.viewport.viewer.navigator.element.style.display = this.isNav() ? "none" : "block";
+    var element =  document.getElementById('osd-draggable-nav');
+    if (typeof (element) !== 'undefined' && element !== null)
+    {
+        element.style = (this.isNav() ? "display: none; " : "display: block; ") + draggableNavCss;
+    }
+    this.setNav( !this.isNav() );
+}
 
 function onFullScreen() {
     if ( this.isFullPage() && !$.isFullScreen() ) {

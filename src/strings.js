@@ -52,6 +52,8 @@ var I18N = {
     Tooltips: {
         FullPage:       "Toggle full page",
         Home:           "Go home",
+        Nav:            "Toggle navigator",
+        Magnifier:      "Toggle magnifier",
         ZoomIn:         "Zoom in",
         ZoomOut:        "Zoom out",
         NextPage:       "Next page",

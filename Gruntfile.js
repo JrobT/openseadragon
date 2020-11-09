@@ -37,7 +37,6 @@ module.exports = function(grunt) {
             "src/navigator.js",
             "src/strings.js",
             "src/point.js",
-            //"src/profiler.js",
             "src/tilesource.js",
             "src/dzitilesource.js",
             "src/iiiftilesource.js",
@@ -254,12 +253,11 @@ module.exports = function(grunt) {
         });
 
         // Copies plugins into the appropriate location in the build folder.
-        grunt.file.copy("plugins/bookmark-url/openseadragon-bookmark-url.js", "build/plugins/" + "bookmark-url.js");
-        grunt.file.copy("plugins/OpenSeadragonHTMLelements/OpenSeadragonHTMLelements.js", "build/plugins/" + "HTMLelements.js");
-        grunt.file.copy("plugins/OpenSeadragonScalebar/openseadragon-scalebar.js", "build/plugins/" + "scalebar.js");
-        grunt.file.copy("plugins/OpenSeadragonDraggableNavigator/openseadragon-draggable-navigator.js", "build/plugins/" + "navigator.js");
-        grunt.file.copy("plugins/OpenSeadragonMagnifier/dist/openseadragonmagnifier.js", "build/plugins/" + "magnifier.js");
-        grunt.file.copy("plugins/openseadragonselection/dist/openseadragonselection.js", "build/plugins/" + "selection.js");
+        grunt.file.copy("plugins/bookmark-url.js", "build/plugins/bookmark-url.js");
+        grunt.file.copy("plugins/scalebar.js", "build/plugins/scalebar.js");
+        grunt.file.copy("plugins/draggable-navigator.js", "build/plugins/draggable-navigator.js");
+        grunt.file.copy("plugins/magnifier.js", "build/plugins/magnifier.js");
+        grunt.file.copy("plugins/selection/dist/selection.js", "build/plugins/selection.js");
     });
 
     // ----------
